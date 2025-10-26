@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Derivative Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Back to Main Page Button */
+        .back-to-main {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-to-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        }
+
+        .back-to-main:active {
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .rule-selector {
+            margin-bottom: 30px;
+        }
+
+        .rule-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .rule-btn {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 2px solid #e2e8f0;
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .rule-btn:hover {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border-color: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        .rule-btn.active {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .input-section {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .calculate-btn:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .result-section {
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-title {
+            color: #059669;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            color: #4f46e5;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .step-content {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .formula {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px solid #d1d5db;
+        }
+
+        .fraction {
+            text-align: center;
+            margin: 20px auto;
+            display: inline-block;
+            font-size: 1.2em;
+        }
+
+        .fraction .numerator {
+            display: block;
+            padding: 10px 20px;
+            border-bottom: 2px solid #333;
+            margin: 0 auto 5px auto;
+        }
+
+        .fraction .denominator {
+            display: block;
+            padding: 10px 20px;
+            margin: 5px auto 0 auto;
+        }
+
+        .final-answer {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .examples {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .examples h3 {
+            color: #92400e;
+            margin-bottom: 15px;
+        }
+
+        .example {
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .rule-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            input[type="text"] {
+                font-size: 16px;
+            }
+
+            /* Adjust back button for mobile */
+            .back-to-main {
+                top: 10px;
+                left: 10px;
+                padding: 10px 18px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .back-to-main {
+                padding: 8px 16px;
+                font-size: 0.75rem;
+            }
+        }
+
+        .error {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Back to Main Page Button -->
+    <button class="back-to-main" onclick="goToMainPage()">
+        ← Main Page
+    </button>
+
+    <div class="container">
+        <div class="header">
+            <h1>Derivative Calculator</h1>
+            <h4>GROUP 4</h4>
+            <p>Calculate derivatives with detailed step-by-step solutions</p>
+        </div>
+
+        <div class="content">
+            <div class="rule-selector">
+                <label>Select Derivative Rule:</label>
+                <div class="rule-buttons">
+                    <button class="rule-btn active" data-rule="addition">Addition/Subtraction</button>
+                    <button class="rule-btn" data-rule="product">Product Rule</button>
+                    <button class="rule-btn" data-rule="quotient">Quotient Rule</button>
+                    <button class="rule-btn" data-rule="basic">Basic Functions</button>
+                </div>
+            </div>
+
+            <div class="input-section" id="input-section">
+            </div>
+
+            <button class="calculate-btn" onclick="calculate()">Calculate Derivative</button>
+
+            <div class="examples">
+                <h3>Input Examples:</h3>
+                <div id="examples-content">
+                </div>
+            </div>
+
+            <div class="result-section" id="result-section">
+                <div class="result-title">Step-by-Step Solution:</div>
+                <div id="steps-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to go back to main page
+        function goToMainPage() {
+    const githubPagesURL = 'https://yourusername.github.io/your-repo-name';
+    const localPath = '/index.html';
+    
+    try {
+        if (window.location.hostname === 'localhost' || 
+            window.location.hostname === '127.0.0.1' ||
+            window.location.protocol === 'file:') {
+            window.location.href = localPath;
+        } else {
+            window.location.href = githubPagesURL;
+        }
+    } catch (error) {
+        console.error('Navigation error:', error);
+        // Fallback to local path
+        window.location.href = localPath;
+    }
+}
+
+        let currentRule = 'addition';
+
+        const ruleConfigs = {
+            addition: {
+                inputs: [
+                    { id: 'function', label: 'Enter function (e.g., 3x² + 2x - 5)', placeholder: '3x² + 2x - 5' }
+                ],
+                examples: [
+                    '3x² + 2x - 5',
+                    'x³ - 4x² + 7x + 2',
+                    '5x⁴ + 3x² - 8x + 1',
+                    '2x⁵ - x³ + 6x - 9'
+                ]
+            },
+            product: {
+                inputs: [
+                    { id: 'f', label: 'First function f(x)', placeholder: 'x² + 1' },
+                    { id: 'g', label: 'Second function g(x)', placeholder: '2x + 3' }
+                ],
+                examples: [
+                    'f(x) = x² + 1, g(x) = 2x + 3',
+                    'f(x) = 3x, g(x) = x² - 2',
+                    'f(x) = x³ + 2x, g(x) = x + 4',
+                    'f(x) = 2x² - 1, g(x) = 3x + 5'
+                ]
+            },
+            quotient: {
+                inputs: [
+                    { id: 'numerator', label: 'Numerator f(x)', placeholder: '2x + 1' },
+                    { id: 'denominator', label: 'Denominator g(x)', placeholder: 'x² + 3' }
+                ],
+                examples: [
+                    'f(x) = 2x + 1, g(x) = x² + 3',
+                    'f(x) = x² - 1, g(x) = x + 2',
+                    'f(x) = 1, g(x) = x (for 1/x)',
+                    'f(x) = x, g(x) = x² + 1'
+                ]
+            },
+            basic: {
+                inputs: [
+                    { id: 'function', label: 'Enter basic function (use sqrt(x) for √x)', placeholder: 'x³ or sqrt(x)' }
+                ],
+                examples: [
+                    'x³ (power rule)',
+                    '5x² (constant multiple)',
+                    'sqrt(x) (square root)',
+                    '2*sqrt(x) + x² (mixed)',
+                    'x^(1/2) (alternative square root)'
+                ]
+            }
+        };
+
+        function initInterface() {
+            updateInputs();
+            updateExamples();
+        }
+
+        document.querySelectorAll('.rule-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.rule-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentRule = this.dataset.rule;
+                updateInputs();
+                updateExamples();
+                document.getElementById('result-section').classList.remove('show');
+            });
+        });
+
+        function updateInputs() {
+            const inputSection = document.getElementById('input-section');
+            const config = ruleConfigs[currentRule];
+
+            inputSection.innerHTML = config.inputs.map(input => `
+                <div class="input-group">
+                    <label for="${input.id}">${input.label}:</label>
+                    <input type="text" id="${input.id}" placeholder="${input.placeholder}">
+                </div>
+            `).join('');
+        }
+
+        function updateExamples() {
+            const examplesContent = document.getElementById('examples-content');
+            const config = ruleConfigs[currentRule];
+
+            examplesContent.innerHTML = config.examples.map(example =>
+                `<div class="example">• ${example}</div>`
+            ).join('');
+        }
+
+        function formatMath(expression) {
+            return expression
+                .replace(/\^(\d+)/g, '<sup>$1</sup>')
+                .replace(/x\^([a-zA-Z0-9]+)/g, 'x<sup>$1</sup>');
+        }
+
+        function parsePolynomial(expr) {
+            expr = expr.replace(/X/g, 'x').replace(/\s+/g, '');
+            
+            // Convert sqrt(x) to x^(1/2), but NOT sqrt(number)
+            expr = expr.replace(/sqrt\(x\)/g, 'x^(1/2)');
+            
+            // Convert remaining sqrt(number) to its numeric value (e.g., sqrt(4) -> 2)
+            expr = expr.replace(/sqrt\((\d+\.?\d*)\)/g, (match, num) => {
+                return Math.sqrt(parseFloat(num));
+            });
+            
+            const terms = [];
+            const parts = expr.split(/([+-])/).filter(part => part !== '');
+            let sign = 1;
+
+            for (let i = 0; i < parts.length; i++) {
+                const part = parts[i];
+                if (part === '+') {
+                    sign = 1;
+                } else if (part === '-') {
+                    sign = -1;
+                } else {
+                    let coeff = 1;
+                    let power = 0;
+
+                    if (part.includes('x')) {
+                        const [coeffPart, ...rest] = part.split('x');
+                        coeff = coeffPart === '' ? 1 : (coeffPart === '-' ? -1 : parseFloat(coeffPart));
+
+                        if (rest.length > 0) {
+                            const powerPart = rest[0];
+                            if (powerPart.includes('²')) power = 2;
+                            else if (powerPart.includes('³')) power = 3;
+                            else if (powerPart.includes('⁴')) power = 4;
+                            else if (powerPart.includes('⁵')) power = 5;
+                            else if (powerPart.includes('(') && powerPart.includes(')')) {
+                                // Handle fractional powers like x^(1/2)
+                                const fracMatch = powerPart.match(/\^\(([^)]+)\)/);
+                                if (fracMatch) {
+                                    const fracStr = fracMatch[1];
+                                    if (fracStr.includes('/')) {
+                                        const [num, denom] = fracStr.split('/');
+                                        power = parseFloat(num) / parseFloat(denom);
+                                    } else {
+                                        power = parseFloat(fracStr);
+                                    }
+                                }
+                            } else if (powerPart.match(/\^?(-?\d+\.?\d*)/)) {
+                                power = parseFloat(powerPart.match(/\^?(-?\d+\.?\d*)/)[1]);
+                            } else {
+                                power = 1;
+                            }
+                        } else {
+                            power = 1;
+                        }
+                    } else {
+                        coeff = parseFloat(part);
+                        power = 0;
+                    }
+
+                    if (!isNaN(coeff)) {
+                        terms.push({ coeff: coeff * sign, power: power });
+                    }
+                    sign = 1;
+                }
+            }
+
+            return terms;
+        }
+
+        function termToString(coeff, power, isFirst = false) {
+            let result = '';
+
+            if (coeff >= 0 && !isFirst) result += ' + ';
+            if (coeff < 0) result += isFirst ? '-' : ' - ';
+
+            const absCoeff = Math.abs(coeff);
+            if (power === 0) {
+                result += absCoeff;
+            } else if (power === 1) {
+                result += absCoeff === 1 ? 'x' : `${absCoeff}x`;
+            } else if (power < 0) {
+                result += absCoeff === 1 ? `x<sup>${power}</sup>` : `${absCoeff}x<sup>${power}</sup>`;
+            } else {
+                result += absCoeff === 1 ? `x<sup>${power}</sup>` : `${absCoeff}x<sup>${power}</sup>`;
+            }
+
+            return result;
+        }
+
+        function combineTerms(terms) {
+            const termsByPower = {};
+            terms.forEach(term => {
+                if (termsByPower[term.power]) {
+                    termsByPower[term.power] += term.coeff;
+                } else {
+                    termsByPower[term.power] = term.coeff;
+                }
+            });
+
+            const combinedTerms = [];
+            Object.keys(termsByPower)
+                .sort((a, b) => b - a)
+                .forEach(power => {
+                    const coeff = termsByPower[power];
+                    if (coeff !== 0) {
+                        combinedTerms.push({ coeff: coeff, power: parseInt(power) });
+                    }
+                });
+
+            return combinedTerms;
+        }
+
+        function simplifyExpression(terms) {
+            const combined = combineTerms(terms);
+            if (combined.length === 0) return '0';
+
+            let result = '';
+            combined.forEach((term, index) => {
+                result += termToString(term.coeff, term.power, index === 0);
+            });
+
+            return result;
+        }
+
+        function multiplyPolynomials(terms1, terms2) {
+            const result = [];
+            terms1.forEach(term1 => {
+                terms2.forEach(term2 => {
+                    result.push({
+                        coeff: term1.coeff * term2.coeff,
+                        power: term1.power + term2.power
+                    });
+                });
+            });
+            return result;
+        }
+
+        function calculateDerivative(terms) {
+            const derivativeTerms = [];
+            terms.forEach(term => {
+                if (term.power === 0) return;
+                derivativeTerms.push({
+                    coeff: term.coeff * term.power,
+                    power: term.power - 1
+                });
+            });
+            return derivativeTerms;
+        }
+
+        function calculate() {
+            const resultSection = document.getElementById('result-section');
+            const stepsContainer = document.getElementById('steps-container');
+
+            try {
+                let steps = [];
+
+                switch (currentRule) {
+                    case 'addition':
+                        steps = calculateAdditionRule();
+                        break;
+                    case 'product':
+                        steps = calculateProductRule();
+                        break;
+                    case 'quotient':
+                        steps = calculateQuotientRule();
+                        break;
+                    case 'basic':
+                        steps = calculateBasicRule();
+                        break;
+                }
+
+                displaySteps(steps);
+                resultSection.classList.add('show');
+
+            } catch (error) {
+                stepsContainer.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+                resultSection.classList.add('show');
+            }
+        }
+
+        function calculateAdditionRule() {
+            const functionInput = document.getElementById('function').value;
+            if (!functionInput) throw new Error('Please enter a function');
+
+            const steps = [];
+            const terms = parsePolynomial(functionInput);
+
+            steps.push({
+                title: 'Given Function',
+                content: `f(x) = ${formatMath(functionInput)}`
+            });
+
+            steps.push({
+                title: 'Apply Addition/Subtraction Rule',
+                content: 'The derivative of a sum/difference is the sum/difference of derivatives: d/dx[f(x) ± g(x)] = f\'(x) ± g\'(x)'
+            });
+
+            let stepContent = 'Taking the derivative of each term:<br>';
+            const derivativeTerms = calculateDerivative(terms);
+
+            terms.forEach((term) => {
+                if (term.power === 0) {
+                    stepContent += `• d/dx[${term.coeff}] = 0<br>`;
+                } else {
+                    const newCoeff = term.coeff * term.power;
+                    const newPower = term.power - 1;
+                    stepContent += `• d/dx[${term.coeff}x<sup>${term.power}</sup>] = ${newCoeff}x<sup>${newPower}</sup><br>`;
+                }
+            });
+
+            steps.push({
+                title: 'Differentiate Each Term',
+                content: stepContent
+            });
+
+            const finalAnswer = simplifyExpression(derivativeTerms);
+
+            steps.push({
+                title: 'Final Answer',
+                content: `f'(x) = ${finalAnswer}`,
+                isFinal: true
+            });
+
+            return steps;
+        }
+
+        function calculateProductRule() {
+            const f = document.getElementById('f').value;
+            const g = document.getElementById('g').value;
+
+            if (!f || !g) throw new Error('Please enter both functions');
+
+            const steps = [];
+
+            steps.push({
+                title: 'Given Functions',
+                content: `f(x) = ${formatMath(f)}, g(x) = ${formatMath(g)}`
+            });
+
+            steps.push({
+                title: 'Product Rule Formula',
+                content: 'If h(x) = f(x) · g(x), then h\'(x) = f\'(x) · g(x) + f(x) · g\'(x)'
+            });
+
+            const fTerms = parsePolynomial(f);
+            const gTerms = parsePolynomial(g);
+            const fPrimeTerms = calculateDerivative(fTerms);
+            const gPrimeTerms = calculateDerivative(gTerms);
+
+            let fPrime = simplifyExpression(fPrimeTerms);
+            let gPrime = simplifyExpression(gPrimeTerms);
+
+            steps.push({
+                title: 'Find f\'(x) and g\'(x)',
+                content: `f'(x) = ${fPrime}<br>g'(x) = ${gPrime}`
+            });
+
+            const firstProduct = multiplyPolynomials(fPrimeTerms, gTerms);
+            const secondProduct = multiplyPolynomials(fTerms, gPrimeTerms);
+
+            const firstProductSimplified = simplifyExpression(firstProduct);
+            const secondProductSimplified = simplifyExpression(secondProduct);
+
+            steps.push({
+                title: 'Apply Product Rule',
+                content: `h'(x) = (${fPrime})(${formatMath(g)}) + (${formatMath(f)})(${gPrime})<br>` +
+                    `h'(x) = ${firstProductSimplified} + ${secondProductSimplified}`
+            });
+
+            const allTerms = [...firstProduct, ...secondProduct];
+            const finalAnswer = simplifyExpression(allTerms);
+
+            steps.push({
+                title: 'Final Answer',
+                content: `h'(x) = ${finalAnswer}`,
+                isFinal: true
+            });
+
+            return steps;
+        }
+
+        function calculateQuotientRule() {
+            const numerator = document.getElementById('numerator').value;
+            const denominator = document.getElementById('denominator').value;
+
+            if (!numerator || !denominator) throw new Error('Please enter both numerator and denominator');
+
+            const steps = [];
+
+            steps.push({
+                title: 'Given Function',
+                content: `h(x) = ${formatMath(numerator)} / (${formatMath(denominator)})`
+            });
+
+            steps.push({
+                title: 'Quotient Rule Formula',
+                content: 'If h(x) = f(x)/g(x), then h\'(x) = [f\'(x)g(x) - f(x)g\'(x)] / [g(x)]²'
+            });
+
+            const fTerms = parsePolynomial(numerator);
+            const gTerms = parsePolynomial(denominator);
+            const fPrimeTerms = calculateDerivative(fTerms);
+            const gPrimeTerms = calculateDerivative(gTerms);
+
+            let fPrime = simplifyExpression(fPrimeTerms);
+            let gPrime = simplifyExpression(gPrimeTerms);
+
+            steps.push({
+                title: 'Find Derivatives',
+                content: `f(x) = ${formatMath(numerator)}, so f'(x) = ${fPrime}<br>` +
+                    `g(x) = ${formatMath(denominator)}, so g'(x) = ${gPrime}`
+            });
+
+            const firstProduct = multiplyPolynomials(fPrimeTerms, gTerms);
+            const secondProduct = multiplyPolynomials(fTerms, gPrimeTerms);
+
+            const numeratorTerms = [...firstProduct];
+            secondProduct.forEach(term => {
+                numeratorTerms.push({ coeff: -term.coeff, power: term.power });
+            });
+
+            const simplifiedNumerator = simplifyExpression(numeratorTerms);
+
+            steps.push({
+                title: 'Calculate Numerator',
+                content: `f'(x)g(x) - f(x)g'(x) = (${fPrime})(${formatMath(denominator)}) - (${formatMath(numerator)})(${gPrime})<br>` +
+                    `= ${simplifiedNumerator}`
+            });
+
+            steps.push({
+                title: 'Final Answer',
+                content: `h'(x) = (${simplifiedNumerator}) / (${formatMath(denominator)})²`,
+                isFinal: true
+            });
+
+            return steps;
+        }
+
+        function calculateBasicRule() {
+            const functionInput = document.getElementById('function').value;
+            if (!functionInput) throw new Error('Please enter a function');
+
+            const steps = [];
+            const terms = parsePolynomial(functionInput);
+
+            steps.push({
+                title: 'Given Function',
+                content: `f(x) = ${formatMath(functionInput)}`
+            });
+
+            steps.push({
+                title: 'Apply Power Rule',
+                content: 'For each term ax^n, the derivative is n·a·x^(n-1)'
+            });
+
+            let stepContent = '';
+            const derivativeTerms = calculateDerivative(terms);
+
+            terms.forEach((term) => {
+                if (term.power === 0) {
+                    stepContent += `d/dx[${term.coeff}] = 0<br>`;
+                } else {
+                    const newCoeff = term.coeff * term.power;
+                    const newPower = term.power - 1;
+                    stepContent += `d/dx[${term.coeff}x<sup>${term.power}</sup>] = ${newCoeff}x<sup>${newPower}</sup><br>`;
+                }
+            });
+
+            steps.push({
+                title: 'Differentiate Each Term',
+                content: stepContent
+            });
+
+            const finalAnswer = simplifyExpression(derivativeTerms);
+
+            steps.push({
+                title: 'Final Answer',
+                content: `f'(x) = ${finalAnswer}`,
+                isFinal: true
+            });
+
+            return steps;
+        }
+
+        function displaySteps(steps) {
+            const stepsContainer = document.getElementById('steps-container');
+
+            stepsContainer.innerHTML = steps.map((step, index) => `
+                <div class="step">
+                    <div class="step-number">Step ${index + 1}: ${step.title}</div>
+                    <div class="step-content">
+                        ${step.content}
+                    </div>
+                </div>
+                ${step.isFinal ? `<div class="final-answer">Final Answer: ${step.content}</div>` : ''}
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', initInterface);
+    </script>
+</body>
+
+</html>
