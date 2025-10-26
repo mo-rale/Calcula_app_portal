@@ -90,7 +90,7 @@ function goTo(page) {
 }
 
 function goToMainSite() {
-    const githubPagesURL = 'https://yourusername.github.io/your-repo-name';
+    const githubPagesURL = 'https://mo-rale.github.io/mathmasterpro/';
     const localPath = '../index.html';
     
     try {

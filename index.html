@@ -176,6 +176,9 @@
       transition: var(--transition);
       position: relative;
       overflow: hidden;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
     }
 
     .card-link::before {
@@ -197,6 +200,30 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
       background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+    }
+
+    .card-link.loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .card-link.loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     /* Color Variants for Cards */
@@ -375,11 +402,43 @@
       margin-bottom: 10px;
       color: white;
     }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--dark);
+      color: white;
+      padding: 12px 20px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.error {
+      background: var(--danger);
+    }
+
+    .toast.success {
+      background: var(--success);
+    }
   </style>
 </head>
 <body>
   <!-- Loading Bar -->
   <div class="loading-bar" id="loadingBar"></div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
 
   <!-- Particle Background -->
   <div class="particles" id="particles"></div>
@@ -425,10 +484,10 @@
           <li>Omac, Analyn</li>
           <li>Hinaloc, Glenn Jr</li>
         </ul>
-        <a href="polyProblemo/index.html" class="card-link">
+        <button class="card-link" onclick="navigateToApp('polyProblemo', 'https://mo-rale.github.io/polyproblemo/', 'polyProblemo/index.html')">
           <span>Launch Application</span>
           <i class="fas fa-external-link-alt"></i>
-        </a>
+        </button>
       </div>
 
       <!-- G2 - Law of Exponents -->
@@ -457,10 +516,10 @@
           <li>Puracan, Jotham Aaron</li>
           <li>Arinduque, Jessa</li>
         </ul>
-        <a href="lawofExponents/index.html" class="card-link">
+        <button class="card-link" onclick="navigateToApp('lawOfExponents', 'https://kadinggg.github.io/laws-of-exponents-website/', 'lawofExponents/index.html')">
           <span>Launch Application</span>
           <i class="fas fa-external-link-alt"></i>
-        </a>
+        </button>
       </div>
 
       <!-- G3 - Derivative Pro -->
@@ -491,10 +550,10 @@
           <li>Gulay, Krisha Joyce</li>
           <li>Lapez, Adrian</li>
         </ul>
-        <a href="derivativePro/BasicDerivativeRules.html" class="card-link">
+        <button class="card-link" onclick="navigateToApp('derivativePro', 'https://jasmine-dano.github.io/basic-derivatives-rules/BasicDerivativeRules.html', 'derivativePro/BasicDerivativeRules.html')">
           <span>Launch Application</span>
           <i class="fas fa-external-link-alt"></i>
-        </a>
+        </button>
       </div>
 
       <!-- G4 - Derivative Calculator -->
@@ -523,10 +582,10 @@
           <li>Pugoso, Kent Bryle</li>
           <li>Tuyogon, Jules</li>
         </ul>
-        <a href="derivativeCalculator/index.html" class="card-link">
+        <button class="card-link" onclick="navigateToApp('derivativeCalculator', 'https://scotzfx.github.io/Derivative-Rules/', 'derivativeCalculator/index.html')">
           <span>Launch Application</span>
           <i class="fas fa-external-link-alt"></i>
-        </a>
+        </button>
       </div>
     </div>
 
@@ -568,6 +627,113 @@
   </div>
 
   <script>
+    // Application URLs configuration
+    const appConfigs = {
+      polyProblemo: {
+        hosted: 'https://mo-rale.github.io/polyproblemo/',
+        local: 'polyProblemo/index.html'
+      },
+      lawOfExponents: {
+        hosted: 'https://kadinggg.github.io/laws-of-exponents-website/',
+        local: 'lawofExponents/index.html'
+      },
+      derivativePro: {
+        hosted: 'https://jasmine-dano.github.io/basic-derivatives-rules/BasicDerivativeRules.html',
+        local: 'derivativePro/BasicDerivativeRules.html'
+      },
+      derivativeCalculator: {
+        hosted: 'https://scotzfx.github.io/Derivative-Rules/',
+        local: 'derivativeCalculator/index.html'
+      }
+    };
+
+    // Show toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = `toast ${type} show`;
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4000);
+    }
+
+    // Check if URL is accessible
+    async function checkUrlAccessibility(url) {
+      try {
+        const response = await fetch(url, { 
+          method: 'HEAD',
+          mode: 'no-cors',
+          cache: 'no-cache'
+        });
+        return true;
+      } catch (error) {
+        console.log(`Hosted URL not accessible: ${url}`, error);
+        return false;
+      }
+    }
+
+    // Navigate to application with fallback
+    async function navigateToApp(appName, hostedUrl, localUrl) {
+      const button = event.target.closest('.card-link');
+      const originalText = button.innerHTML;
+      
+      // Show loading state
+      button.classList.add('loading');
+      button.disabled = true;
+      
+      try {
+        // Show loading bar
+        document.getElementById('loadingBar').style.opacity = '1';
+        document.getElementById('loadingBar').style.width = '30%';
+        
+        // Try hosted URL first
+        const isHostedAccessible = await checkUrlAccessibility(hostedUrl);
+        
+        if (isHostedAccessible) {
+          document.getElementById('loadingBar').style.width = '100%';
+          showToast(`Opening ${appName} hosted version...`, 'success');
+          
+          // Small delay to show the loading completion
+          setTimeout(() => {
+            window.open(hostedUrl, '_blank');
+          }, 500);
+        } else {
+          // Fallback to local version
+          document.getElementById('loadingBar').style.width = '70%';
+          showToast(`Hosted version unavailable. Opening local version...`, 'error');
+          
+          // Check if local file exists
+          try {
+            const response = await fetch(localUrl, { method: 'HEAD' });
+            if (response.ok) {
+              document.getElementById('loadingBar').style.width = '100%';
+              setTimeout(() => {
+                window.location.href = localUrl;
+              }, 500);
+            } else {
+              throw new Error('Local file not found');
+            }
+          } catch (localError) {
+            showToast(`Neither hosted nor local version is available for ${appName}`, 'error');
+            console.error('Both URLs failed:', localError);
+          }
+        }
+      } catch (error) {
+        console.error('Navigation error:', error);
+        showToast(`Error accessing ${appName}. Please try again later.`, 'error');
+      } finally {
+        // Reset loading state after a delay
+        setTimeout(() => {
+          button.classList.remove('loading');
+          button.disabled = false;
+          button.innerHTML = originalText;
+          document.getElementById('loadingBar').style.opacity = '0';
+          document.getElementById('loadingBar').style.width = '0%';
+        }, 1000);
+      }
+    }
+
     // Create particle background
     function createParticles() {
       const particlesContainer = document.getElementById('particles');
@@ -626,16 +792,6 @@
           card.style.opacity = '1';
           card.style.transform = 'translateY(0)';
         }, index * 200);
-      });
-
-      // Add click animation to links
-      const links = document.querySelectorAll('.card-link');
-      links.forEach(link => {
-        link.addEventListener('click', function(e) {
-          // Show loading bar when navigating
-          document.getElementById('loadingBar').style.opacity = '1';
-          document.getElementById('loadingBar').style.width = '100%';
-        });
       });
     });
 
