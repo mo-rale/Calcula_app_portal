@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MathMaster Pro - Interactive Learning Platform</title>
+  <title>MathMaster Pro - Unified Mathematics Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -210,26 +210,26 @@
     .card:nth-child(3) .card-link { background: linear-gradient(135deg, #4cc9f0, #3a86ff); }
     .card:nth-child(4) .card-link { background: linear-gradient(135deg, #f8961e, #e85d04); }
 
-    /* Features Section */
-    .features {
+    /* Team Section */
+    .team-section {
       margin-top: 80px;
       text-align: center;
     }
 
-    .features h2 {
+    .team-section h2 {
       font-size: 2.5rem;
       color: white;
       margin-bottom: 50px;
       font-weight: 600;
     }
 
-    .features-grid {
+    .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 30px;
     }
 
-    .feature {
+    .team-card {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       padding: 30px;
@@ -238,26 +238,26 @@
       transition: var(--transition);
     }
 
-    .feature:hover {
+    .team-card:hover {
       background: rgba(255, 255, 255, 0.15);
       transform: translateY(-5px);
     }
 
-    .feature i {
+    .team-card i {
       font-size: 2.5rem;
       color: white;
       margin-bottom: 20px;
       display: block;
     }
 
-    .feature h3 {
+    .team-card h3 {
       color: white;
       font-size: 1.3rem;
       margin-bottom: 15px;
       font-weight: 500;
     }
 
-    .feature p {
+    .team-card p {
       color: rgba(255, 255, 255, 0.8);
       font-size: 0.95rem;
       line-height: 1.6;
@@ -319,7 +319,7 @@
         height: 60px;
       }
 
-      .features-grid {
+      .team-grid {
         grid-template-columns: 1fr;
         gap: 20px;
       }
@@ -363,6 +363,18 @@
       z-index: 1000;
       transition: width 0.3s ease;
     }
+
+    /* App Badge */
+    .app-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -378,168 +390,169 @@
       <div class="logo">
         <i class="fas fa-calculator"></i>
       </div>
-      <h1>MathMaster Pro</h1>
+      <h1>MathMaster Pro Portal</h1>
       <p class="subtitle">
-        Your comprehensive mathematics learning platform featuring interactive tools, 
-        step-by-step solutions, and engaging practice problems for mastering calculus and algebra.
+        Your gateway to four independently developed mathematics applications. 
+        Access specialized tools for polynomials, exponents, and derivatives - 
+        all created by BSCS 2B students.
       </p>
     </header>
 
-<!-- Main Cards Grid -->
-<div class="cards-grid">
-  <!-- G1 - Poly Problemo -->
-  <div class="card">
-    <div class="card-icon">
-      <i class="fas fa-project-diagram"></i>
-    </div>
-    <h3 class="card-title" style="text-align: left;">Poly Problemo</h3>
-    <p class="card-description">
-      Master polynomial operations with our interactive learning platform. 
-      Learn addition, subtraction, multiplication, and division of polynomials 
-      with step-by-step guidance and practice quizzes.
-    </p>
-    <p style="font-weight: 600; color: #333; margin-bottom: 10px; text-align: left;">
-      <span style="color: #4361ee;">Group 1</span><br>
-      Leader: <strong>Badili, Ahron</strong><br>
-      Members:
-    </p>
-    <ul style="margin-left: 20px; color: #555; text-align: left; line-height: 1.6;">
-      <li>Derita, Romavel Jr</li>
-      <li>Olalo, Jerry</li>
-      <li>Inojales, Genevieve</li>
-      <li>Ding Ding, Micheal</li>
-      <li>Patulombon, Jeremiah</li>
-      <li>Omac, Analyn</li>
-      <li>Hinaloc, Glenn Jr</li>
-    </ul>
-    <a href="polyProblemo/index.html" class="card-link">
-      <span>Explore Now</span>
-      <i class="fas fa-arrow-right"></i>
-    </a>
-  </div>
-
-  <!-- G2 - Law of Exponents -->
-  <div class="card">
-    <div class="card-icon">
-      <i class="fas fa-superscript"></i>
-    </div>
-    <h3 class="card-title">Law of Exponents</h3>
-    <p class="card-description">
-      Comprehensive guide to exponent rules with clear explanations, 
-      examples, and interactive quizzes. Master the fundamental rules 
-      that power algebraic manipulation and calculus.
-    </p>
-    <p style="font-weight: 600; color: #333; margin-bottom: 10px; text-align: left;">
-      <span style="color: #f8961e;">Group 2</span><br>
-      Leader: <strong>Timbal, Cristian Henrich</strong><br>
-      Members:
-    </p>
-    <ul style="margin-left: 20px; color: #555; text-align: left; line-height: 1.6;">
-      <li>Jaromahum, Mark Jesmher</li>
-      <li>Sibarre, Anthony</li>
-      <li>Olchondra, John Obet</li>
-      <li>Yana, Isidro</li>
-      <li>Aguilar, Ronald Christian</li>
-      <li>Busis, Kinson</li>
-      <li>Puracan, Jotham Aaron</li>
-      <li>Arinduque, Jessa</li>
-    </ul>
-    <a href="lawofExponents/index.html" class="card-link">
-      <span>Learn Rules</span>
-      <i class="fas fa-arrow-right"></i>
-    </a>
-  </div>
-
-  <!-- G3 - Derivative Pro -->
-  <div class="card">
-    <div class="card-icon">
-      <i class="fas fa-chart-line"></i>
-    </div>
-    <h3 class="card-title">Derivative Pro</h3>
-    <p class="card-description">
-      Dive into the world of calculus with our derivative learning platform. 
-      Understand basic derivative rules, practice with interactive problems, 
-      and track your progress with achievement badges.
-    </p>
-    <p style="font-weight: 600; color: #333; margin-bottom: 10px; text-align: left;">
-      <span style="color: #7209b7;">Group 3</span><br>
-      Leader: <strong>Dano, Jasmine</strong><br>
-      Members:
-    </p>
-    <ul style="margin-left: 20px; color: #555; text-align: left; line-height: 1.6;">
-      <li>Peligrino, Zradly Care</li>
-      <li>Auditor, Bridgel Ann</li>
-      <li>Olonan, Christian Nino</li>
-      <li>Delamata, Delyn</li>
-      <li>Casing, Chelsea Kate</li>
-      <li>Cuyno, John Earl</li>
-      <li>Gamo, John Paul</li>
-      <li>Daganato, Alvin Jacob</li>
-      <li>Gulay, Krisha Joyce</li>
-      <li>Lapez, Adrian</li>
-    </ul>
-    <a href="derivativePro/BasicDerivativeRules.html" class="card-link">
-      <span>Start Learning</span>
-      <i class="fas fa-arrow-right"></i>
-    </a>
-  </div>
-
-  <!-- G4 - Derivative Calculator -->
-  <div class="card">
-    <div class="card-icon">
-      <i class="fas fa-calculator"></i>
-    </div>
-    <h3 class="card-title">Derivative Calculator</h3>
-    <p class="card-description">
-      Powerful derivative calculator with step-by-step solutions. 
-      Supports addition, product, quotient rules and basic functions. 
-      Perfect for verifying your work and understanding the process.
-    </p>
-    <p style="font-weight: 600; color: #333; margin-bottom: 10px; text-align: left;">
-      <span style="color: #4cc9f0;">Group 4</span><br>
-      Leader: <strong>Ugay, Denver</strong><br>
-      Members:
-    </p>
-    <ul style="margin-left: 20px; color: #555; text-align: left; line-height: 1.6;">
-      <li>Edo, Jed Joward</li>
-      <li>Jotojot, Wendel</li>
-      <li>Carvantes, Fenny Ann</li>
-      <li>Nemesis, Manes</li>
-      <li>Aleria, Harold Emmanuel</li>
-      <li>Aleria, Jeremiah Karl</li>
-      <li>Pugoso, Kent Bryle</li>
-      <li>Tuyogon, Jules</li>
-    </ul>
-    <a href="derivativeCalculator/index.html" class="card-link">
-      <span>Calculate Now</span>
-      <i class="fas fa-arrow-right"></i>
-    </a>
-  </div>
-</div>
-
-    <!-- Features Section -->
-    <section class="features">
-      <h2>Why Choose MathMaster Pro?</h2>
-      <div class="features-grid">
-        <div class="feature">
-          <i class="fas fa-graduation-cap"></i>
-          <h3>Interactive Learning</h3>
-          <p>Engage with dynamic content that makes complex mathematical concepts easy to understand.</p>
+    <!-- Main Cards Grid -->
+    <div class="cards-grid">
+      <!-- G1 - Poly Problemo -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-project-diagram"></i>
         </div>
-        <div class="feature">
-          <i class="fas fa-chalkboard-teacher"></i>
-          <h3>Step-by-Step Solutions</h3>
-          <p>Follow detailed explanations that break down problems into manageable steps.</p>
+        <span class="app-badge" style="background: #4361ee;">External Application</span>
+        <h3 class="card-title" style="text-align: left;">Poly Problemo</h3>
+        <p class="card-description">
+          Access the complete polynomial operations application with interactive learning, 
+          step-by-step solutions, and practice quizzes. Developed as a standalone application.
+        </p>
+        <p style="font-weight: 600; color: #333; margin-bottom: 10px; text-align: left;">
+          <span style="color: #4361ee;">Group 1 Application</span><br>
+          Lead Developer: <strong>Badili, Ahron</strong><br>
+          Development Team:
+        </p>
+        <ul style="margin-left: 20px; color: #555; text-align: left; line-height: 1.6;">
+          <li>Derita, Romavel Jr</li>
+          <li>Olalo, Jerry</li>
+          <li>Inojales, Genevieve</li>
+          <li>Ding Ding, Micheal</li>
+          <li>Patulombon, Jeremiah</li>
+          <li>Omac, Analyn</li>
+          <li>Hinaloc, Glenn Jr</li>
+        </ul>
+        <a href="polyProblemo/index.html" class="card-link">
+          <span>Launch Application</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+
+      <!-- G2 - Law of Exponents -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-superscript"></i>
         </div>
-        <div class="feature">
-          <i class="fas fa-mobile-alt"></i>
-          <h3>Mobile Friendly</h3>
-          <p>Access all tools and lessons on any device with our responsive design.</p>
+        <span class="app-badge" style="background: #f8961e;">External Application</span>
+        <h3 class="card-title">Law of Exponents</h3>
+        <p class="card-description">
+          Explore the comprehensive exponents learning platform with rules, 
+          examples, and interactive content. A complete standalone application.
+        </p>
+        <p style="font-weight: 600; color: #333; margin-bottom: 10px; text-align: left;">
+          <span style="color: #f8961e;">Group 2 Application</span><br>
+          Lead Developer: <strong>Timbal, Cristian Henrich</strong><br>
+          Development Team:
+        </p>
+        <ul style="margin-left: 20px; color: #555; text-align: left; line-height: 1.6;">
+          <li>Jaromahum, Mark Jesmher</li>
+          <li>Sibarre, Anthony</li>
+          <li>Olchondra, John Obet</li>
+          <li>Yana, Isidro</li>
+          <li>Aguilar, Ronald Christian</li>
+          <li>Busis, Kinson</li>
+          <li>Puracan, Jotham Aaron</li>
+          <li>Arinduque, Jessa</li>
+        </ul>
+        <a href="lawofExponents/index.html" class="card-link">
+          <span>Launch Application</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+
+      <!-- G3 - Derivative Pro -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-chart-line"></i>
         </div>
-        <div class="feature">
+        <span class="app-badge" style="background: #7209b7;">External Application</span>
+        <h3 class="card-title">Derivative Pro</h3>
+        <p class="card-description">
+          Access the complete derivative learning platform with rules, 
+          interactive problems, and achievement tracking. Standalone application.
+        </p>
+        <p style="font-weight: 600; color: #333; margin-bottom: 10px; text-align: left;">
+          <span style="color: #7209b7;">Group 3 Application</span><br>
+          Lead Developer: <strong>Dano, Jasmine</strong><br>
+          Development Team:
+        </p>
+        <ul style="margin-left: 20px; color: #555; text-align: left; line-height: 1.6;">
+          <li>Peligrino, Zradly Care</li>
+          <li>Auditor, Bridgel Ann</li>
+          <li>Olonan, Christian Nino</li>
+          <li>Delamata, Delyn</li>
+          <li>Casing, Chelsea Kate</li>
+          <li>Cuyno, John Earl</li>
+          <li>Gamo, John Paul</li>
+          <li>Daganato, Alvin Jacob</li>
+          <li>Gulay, Krisha Joyce</li>
+          <li>Lapez, Adrian</li>
+        </ul>
+        <a href="derivativePro/BasicDerivativeRules.html" class="card-link">
+          <span>Launch Application</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+
+      <!-- G4 - Derivative Calculator -->
+      <div class="card">
+        <div class="card-icon">
+          <i class="fas fa-calculator"></i>
+        </div>
+        <span class="app-badge" style="background: #4cc9f0;">External Application</span>
+        <h3 class="card-title">Derivative Calculator</h3>
+        <p class="card-description">
+          Use the advanced derivative computation tool with step-by-step 
+          solutions and multiple rule support. Complete standalone application.
+        </p>
+        <p style="font-weight: 600; color: #333; margin-bottom: 10px; text-align: left;">
+          <span style="color: #4cc9f0;">Group 4 Application</span><br>
+          Lead Developer: <strong>Ugay, Denver</strong><br>
+          Development Team:
+        </p>
+        <ul style="margin-left: 20px; color: #555; text-align: left; line-height: 1.6;">
+          <li>Edo, Jed Joward</li>
+          <li>Jotojot, Wendel</li>
+          <li>Carvantes, Fenny Ann</li>
+          <li>Nemesis, Manes</li>
+          <li>Aleria, Harold Emmanuel</li>
+          <li>Aleria, Jeremiah Karl</li>
+          <li>Pugoso, Kent Bryle</li>
+          <li>Tuyogon, Jules</li>
+        </ul>
+        <a href="derivativeCalculator/index.html" class="card-link">
+          <span>Launch Application</span>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Team Section -->
+    <section class="team-section">
+      <h2>About This Portal</h2>
+      <div class="team-grid">
+        <div class="team-card">
+          <i class="fas fa-door-open"></i>
+          <h3>Unified Access</h3>
+          <p>This portal provides centralized access to four independently developed mathematics applications, each with its own unique features and implementation.</p>
+        </div>
+        <div class="team-card">
+          <i class="fas fa-users"></i>
+          <h3>Team Collaboration</h3>
+          <p>Each application was developed by separate student teams, showcasing different approaches to mathematical education through web technologies.</p>
+        </div>
+        <div class="team-card">
           <i class="fas fa-rocket"></i>
-          <h3>Instant Feedback</h3>
-          <p>Get immediate results and explanations to accelerate your learning process.</p>
+          <h3>Standalone Applications</h3>
+          <p>All four applications are complete, standalone projects that can be used independently or accessed through this unified portal.</p>
+        </div>
+        <div class="team-card">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>Educational Focus</h3>
+          <p>Designed to demonstrate how web technologies can create engaging, interactive mathematical learning experiences for students.</p>
         </div>
       </div>
     </section>
@@ -547,8 +560,9 @@
     <!-- Footer -->
     <footer>
       <p class="footer-text">
-        &copy; 2025 MathMaster Pro. Designed for educational excellence. 
-        Built by Groups from BSCS 2B - Bohol Island State University.
+        &copy; 2025 MathMaster Pro Portal. A unified gateway to mathematics applications.<br>
+        Developed by BSCS 2B Students - Bohol Island State University.<br>
+        <small>This portal provides access to four independently developed applications.</small>
       </p>
     </footer>
   </div>
