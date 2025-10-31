@@ -34,6 +34,9 @@
 - **Focus**: Derivative computation engine
 - **Features**: Advanced derivative calculator with step solutions
 
+## Open website by clicking the link
+  [Calcula App Portal](https://mo-rale.github.io/Calcula_app_portal/)
+  
 ## 🚀 Quick Start
 
 ### Option 1: Direct Access
