@@ -1,4 +1,4 @@
-# MathMaster Pro - Unified Mathematics Platform
+# Calcula App Portal - Unified Mathematics Platform
 
 ![MathMaster Pro](https://img.shields.io/badge/MathMaster-Pro-brightgreen)
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
@@ -6,7 +6,7 @@
 
 ## 🎯 Overview
 
-**MathMaster Pro** is a unified portal that brings together four independently developed mathematics applications into a single, cohesive platform. This landing page serves as the central hub for accessing all mathematical tools developed by different student groups.
+**Calcula App Portal** is a unified portal that brings together four independently developed mathematics applications into a single, cohesive platform. This landing page serves as the central hub for accessing all mathematical tools developed by different student groups.
 
 ## 🌐 Integrated Applications
 
@@ -151,7 +151,7 @@ This project is licensed under the MIT License.
 
 <div align="center">
 
-**MathMaster Pro** - *Unifying Mathematical Excellence*
+**Calcula App Portal** - *Unifying Mathematical Excellence*
 
 **BSCS 2B | Bohol Island State University**
 
